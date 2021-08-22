@@ -42,7 +42,6 @@ type ProgressiveFormat struct {
 	URL     string `json:"url"`
 	Cdn     string `json:"cdn"`
 	Quality string `json:"quality"`
-	ID      string `json:"id"`
 	Origin  string `json:"origin"`
 	Height  int    `json:"height"`
 }
