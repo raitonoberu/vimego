@@ -29,3 +29,15 @@ func NewVideoFromId(videoId int) *Video {
 		Header:     map[string][]string{"User-Agent": {UserAgent}},
 	}
 }
+
+func NewSearchClient() *SearchClient {
+	return &SearchClient{
+		PerPage:    18,
+		Filter:     VideoFilter,
+		Order:      RelevanceOrder,
+		Direction:  DescDirection,
+		Category:   AnyCategory,
+		HTTPClient: &http.Client{},
+		Header:     map[string][]string{"User-Agent": {UserAgent}},
+	}
+}
