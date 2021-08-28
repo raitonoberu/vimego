@@ -110,7 +110,7 @@ func main() {
 	video := result.Data.Videos()[0]
 
 	// You can even get a direct URL (progressive / hls)
-	// url := videos[0].Files.Progressive().Best()
+	// url := video.Files.Progressive().Best()
 
 	jsonstr, _ := json.Marshal(video)
 	fmt.Println(string(jsonstr))
