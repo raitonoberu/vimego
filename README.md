@@ -463,7 +463,6 @@ The code seems to be ready, but I have some thoughts on improving it and there a
 - Add example file
 - Add tests
 - Make a CLI tool
-- Implement searching
 
 ## License
 
