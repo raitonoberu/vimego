@@ -44,6 +44,7 @@ func (c *SearchClient) getToken() (string, error) {
 	return result.Token, nil
 }
 
+// Search returns the result from the requested page.
 func (c *SearchClient) Search(query string, page int) (*SearchResult, error) {
 	var token string
 	c.tokenMu.Lock()
@@ -297,6 +298,7 @@ type VideoFile struct {
 
 type VideoFiles []*VideoFile
 
+// Best returns the VideoFile with the largest size.
 func (f VideoFiles) Best() *VideoFile {
 	if len(f) == 0 {
 		return nil
@@ -311,6 +313,7 @@ func (f VideoFiles) Best() *VideoFile {
 	return best
 }
 
+// Worst returns the VideoFile with the smallest size.
 func (f VideoFiles) Worst() *VideoFile {
 	if len(f) == 0 {
 		return nil
@@ -325,6 +328,7 @@ func (f VideoFiles) Worst() *VideoFile {
 	return worst
 }
 
+// Prorgessive returns VideoFiles with a direct URL.
 func (f VideoFiles) Progressive() VideoFiles {
 	var result = VideoFiles{}
 	for _, file := range f {
@@ -335,6 +339,7 @@ func (f VideoFiles) Progressive() VideoFiles {
 	return result
 }
 
+// Hls returns VideoFiles with a URL to the .m3u8 playlist.
 func (f VideoFiles) Hls() *VideoFile {
 	for _, file := range f {
 		if file.Quality == "hls" {

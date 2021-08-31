@@ -36,6 +36,7 @@ func (d DashVideoStreams) Swap(a, b int) {
 	d[a], d[b] = d[b], d[a]
 }
 
+// Best returns the DashVideoStream with the highest bitrate.
 func (d DashVideoStreams) Best() *DashVideoStream {
 	if len(d) != 0 {
 		return d[len(d)-1]
@@ -43,6 +44,7 @@ func (d DashVideoStreams) Best() *DashVideoStream {
 	return nil
 }
 
+// Worst returns the DashVideoStream with the lowest bitrate.
 func (d DashVideoStreams) Worst() *DashVideoStream {
 	if len(d) != 0 {
 		return d[0]
@@ -64,6 +66,7 @@ func (d DashAudioStreams) Swap(a, b int) {
 	d[a], d[b] = d[b], d[a]
 }
 
+// Best returns the DashAudioStream with the highest bitrate.
 func (d DashAudioStreams) Best() *DashAudioStream {
 	if len(d) != 0 {
 		return d[len(d)-1]
@@ -71,6 +74,7 @@ func (d DashAudioStreams) Best() *DashAudioStream {
 	return nil
 }
 
+// Worst returns the DashAudioStream with the lowest bitrate.
 func (d DashAudioStreams) Worst() *DashAudioStream {
 	if len(d) != 0 {
 		return d[0]
@@ -93,6 +97,7 @@ type DashStream struct {
 	Segments           []*DashSegment `json:"segments"`
 }
 
+// Readers returns an io.ReadCloser for reading streaming data.
 func (s *DashStream) Reader(httpClient *http.Client) (io.ReadCloser, int64, error) {
 	if httpClient == nil {
 		httpClient = http.DefaultClient

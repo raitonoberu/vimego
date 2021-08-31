@@ -1,3 +1,4 @@
+// Package vimego: Search, download Vimeo videos and retrieve metadata.
 package vimego
 
 import (
@@ -7,6 +8,7 @@ import (
 
 const UserAgent = "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:84.0) Gecko/20100101 Firefox/84.0"
 
+// NewVideo creates a new Video from URL.
 func NewVideo(url string) (*Video, error) {
 	videoId := validateUrl(url)
 	if videoId == 0 {
@@ -21,6 +23,7 @@ func NewVideo(url string) (*Video, error) {
 	}, nil
 }
 
+// NewVideo creates a new Video from video ID.
 func NewVideoFromId(videoId int) *Video {
 	return &Video{
 		Url:        fmt.Sprintf("https://vimeo.com/%v", videoId),
@@ -30,6 +33,7 @@ func NewVideoFromId(videoId int) *Video {
 	}
 }
 
+// NewSearchClient creates a new SearchClient with default parameters.
 func NewSearchClient() *SearchClient {
 	return &SearchClient{
 		PerPage:    18,

@@ -28,6 +28,7 @@ type Metadata struct {
 	EmbedPrivacy       string `json:"embed_privacy"`
 }
 
+// GetUploadDate returns the video upload date as time.Time object.
 func (m *Metadata) GetUploadDate() (time.Time, error) {
 	return time.Parse("2006-01-02 15:04:05", m.UploadDate)
 }

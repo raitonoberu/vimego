@@ -20,6 +20,7 @@ func (p ProgressiveFormats) Swap(a, b int) {
 	p[a], p[b] = p[b], p[a]
 }
 
+// Best returns the ProgressiveFormat with the hightest resolution.
 func (p ProgressiveFormats) Best() *ProgressiveFormat {
 	if len(p) != 0 {
 		return p[len(p)-1]
@@ -27,6 +28,7 @@ func (p ProgressiveFormats) Best() *ProgressiveFormat {
 	return nil
 }
 
+// Worst returns the ProgressiveFormat with the lowest resolution.
 func (p ProgressiveFormats) Worst() *ProgressiveFormat {
 	if len(p) != 0 {
 		return p[0]
@@ -63,6 +65,7 @@ type DashFormat struct {
 	} `json:"cdns"`
 }
 
+// Url returns the URL for the video stream.
 func (s *DashFormat) Url() string {
 	switch s.DefaultCdn {
 	case "akfire_interconnect_quic":
@@ -98,6 +101,7 @@ type HlsFormat struct {
 	} `json:"cdns"`
 }
 
+// Url returns the URL for the .m3u8 playlist.
 func (s *HlsFormat) Url() string {
 	switch s.DefaultCdn {
 	case "akfire_interconnect_quic":

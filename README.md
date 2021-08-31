@@ -10,8 +10,6 @@
 go get github.com/raitonoberu/vimego
 ```
 
-Please note that the API is not yet final and may change in the future.
-
 ## Usage
 
 ### Get a direct URL for the best available .mp4 stream (video+audio)
@@ -458,9 +456,6 @@ func main() {
 The code seems to be ready, but I have some thoughts on improving it and there are still formalities to be completed.
 
 ### TODO:
-- Add docs & comments
-- Try to simplify the API
-- Add example file
 - Add tests
 - Make a CLI tool
 

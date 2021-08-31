@@ -19,6 +19,7 @@ type Video struct {
 	HTTPClient *http.Client
 }
 
+// Metadata returns the video metadata.
 func (v *Video) Metadata() (*Metadata, error) {
 	req, _ := http.NewRequest(
 		"GET",
@@ -46,6 +47,10 @@ func (v *Video) Metadata() (*Metadata, error) {
 	return result[0], nil
 }
 
+// Formats returns the video formats.
+// Progressive formats contain direct video+audio streams up to 1080p.
+// Hls format contains an URL to .m3u8 playlist with all possible streams.
+// Dash format contains a JSON URL that can be parsed using GetDashStreams.
 func (v *Video) Formats() (*VideoFormats, error) {
 	configUrl := fmt.Sprintf("https://player.vimeo.com/video/%v/config", v.VideoId)
 	req, _ := http.NewRequest("GET", configUrl, nil)
@@ -124,6 +129,7 @@ func (v *Video) Formats() (*VideoFormats, error) {
 	return configData.Request.Files, nil
 }
 
+// GetDashStreams returns DASH streams of the video.
 func (v *Video) GetDashStreams(dashUrl string) (*DashStreams, error) {
 	req, _ := http.NewRequest("GET", dashUrl, nil)
 	req.Header = v.Header
