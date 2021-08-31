@@ -453,10 +453,11 @@ func main() {
 
 ## Information
 
-The code seems to be ready, but I have some thoughts on improving it and there are still formalities to be completed.
+The code seems to be ready, but I have some thoughts on improving it.
 
 ### TODO:
-- Add tests
+- Handle video IDs other than int
+- Captcha processing
 - Make a CLI tool
 
 ## License
