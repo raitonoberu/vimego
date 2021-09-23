@@ -62,6 +62,7 @@ func (c *SearchClient) Search(query string, page int) (*SearchResult, error) {
 	c.tokenMu.Unlock()
 
 	params := url.Values{}
+	params.Add("fields", "search_web")
 	params.Add("query", query)
 	params.Add("filter_type", string(c.Filter))
 	params.Add("sort", string(c.Order))
