@@ -41,7 +41,7 @@ func (v *Video) Metadata() (*Metadata, error) {
 	var result []*Metadata
 	err = json.NewDecoder(resp.Body).Decode(&result)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("couldn't decode metadata JSON: %w", err)
 	}
 
 	return result[0], nil
