@@ -41,7 +41,7 @@ func (v *Video) Metadata() (*Metadata, error) {
 	var result []*Metadata
 	err = json.NewDecoder(resp.Body).Decode(&result)
 	if err != nil {
-		return nil, ErrDecodingFailed
+		return nil, err
 	}
 
 	return result[0], nil
@@ -70,7 +70,7 @@ func (v *Video) Formats() (*VideoFormats, error) {
 	if resp.StatusCode < 400 {
 		err = json.NewDecoder(resp.Body).Decode(&configData)
 		if err != nil {
-			return nil, ErrDecodingFailed
+			return nil, fmt.Errorf("couldn't decode config JSON: %w", err)
 		}
 	} else {
 		if resp.StatusCode == 403 {
@@ -113,7 +113,7 @@ func (v *Video) Formats() (*VideoFormats, error) {
 				defer resp.Body.Close()
 				err = json.NewDecoder(resp.Body).Decode(&configData)
 				if err != nil {
-					return nil, ErrDecodingFailed
+					return nil, fmt.Errorf("couldn't decode config JSON: %w", err)
 				}
 			} else {
 				return nil, ErrParsingFailed
@@ -142,7 +142,7 @@ func (v *Video) GetDashStreams(dashUrl string) (*DashStreams, error) {
 	var result DashStreams
 	err = json.NewDecoder(resp.Body).Decode(&result)
 	if err != nil {
-		return nil, ErrDecodingFailed
+		return nil, fmt.Errorf("couldn't decode dash JSON: %w", err)
 	}
 
 	formaturl, _ := url.Parse(dashUrl)

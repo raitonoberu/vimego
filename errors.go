@@ -6,9 +6,8 @@ import (
 )
 
 var (
-	ErrInvalidUrl     = errors.New("the URL is invalid")
-	ErrDecodingFailed = errors.New("couldn't decode JSON")
-	ErrParsingFailed  = errors.New("couldn't find config url")
+	ErrInvalidUrl    = errors.New("the URL is invalid")
+	ErrParsingFailed = errors.New("couldn't get config")
 )
 
 type ErrUnexpectedStatusCode int

@@ -38,7 +38,7 @@ func (c *SearchClient) getToken() (string, error) {
 
 	err = json.NewDecoder(resp.Body).Decode(&result)
 	if err != nil {
-		return "", ErrDecodingFailed
+		return "", fmt.Errorf("couldn't decode token JSON: %w", err)
 	}
 
 	return result.Token, nil
@@ -86,7 +86,7 @@ func (c *SearchClient) Search(query string, page int) (*SearchResult, error) {
 	if resp.StatusCode == 200 {
 		err := json.NewDecoder(resp.Body).Decode(&result)
 		if err != nil {
-			return nil, ErrDecodingFailed
+			return nil, fmt.Errorf("couldn't decode search JSON: %w", err)
 		}
 	} else {
 		if resp.StatusCode == 401 {
@@ -122,7 +122,7 @@ func (c *SearchClient) Search(query string, page int) (*SearchResult, error) {
 
 			err = json.NewDecoder(resp.Body).Decode(&result)
 			if err != nil {
-				return nil, ErrDecodingFailed
+				return nil, fmt.Errorf("couldn't decode search JSON: %w", err)
 			}
 		} else {
 			return nil, ErrUnexpectedStatusCode(resp.StatusCode)
