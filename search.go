@@ -188,42 +188,16 @@ func (d SearchData) Groups() []*GroupItem {
 }
 
 type VideoItem struct {
-	Name          string    `json:"name"`
-	Description   string    `json:"description"`
-	Type          string    `json:"type"`
-	Link          string    `json:"link"`
-	Duration      int       `json:"duration"`
-	Width         int       `json:"width"`
-	Language      string    `json:"language"`
-	Height        int       `json:"height"`
-	CreatedTime   time.Time `json:"created_time"`
-	ModifiedTime  time.Time `json:"modified_time"`
-	ReleaseTime   time.Time `json:"release_time"`
-	ContentRating []string  `json:"content_rating"`
-	Pictures      struct {
-		Active         bool           `json:"active"`
-		Sizes          []*PictureSize `json:"sizes"`
-		DefaultPicture bool           `json:"default_picture"`
+	Name        string    `json:"name"`
+	Link        string    `json:"link"`
+	Duration    int       `json:"duration"`
+	CreatedTime time.Time `json:"created_time"`
+	Privacy     struct {
+		View string `json:"view"`
+	} `json:"privacy"`
+	Pictures struct {
+		Sizes []PictureSize `json:"sizes"`
 	} `json:"pictures"`
-	Tags []struct {
-		Name      string `json:"name"`
-		Tag       string `json:"tag"`
-		Canonical string `json:"canonical"`
-		Metadata  struct {
-			Connections struct {
-				Videos struct {
-					Total int `json:"total"`
-				} `json:"videos"`
-			} `json:"connections"`
-		} `json:"metadata"`
-	} `json:"tags"`
-	Uploader struct {
-		Pictures struct {
-			Active         bool           `json:"active"`
-			Sizes          []*PictureSize `json:"sizes"`
-			DefaultPicture bool           `json:"default_picture"`
-		} `json:"pictures"`
-	} `json:"uploader"`
 	Metadata struct {
 		Connections struct {
 			Comments struct {
@@ -235,119 +209,13 @@ type VideoItem struct {
 		} `json:"connections"`
 	} `json:"metadata"`
 	User struct {
-		Name        string    `json:"name"`
-		Link        string    `json:"link"`
-		Location    string    `json:"location"`
-		CreatedTime time.Time `json:"created_time"`
-		Pictures    struct {
-			Active         bool           `json:"active"`
-			Type           string         `json:"type"`
-			Sizes          []*PictureSize `json:"sizes"`
-			DefaultPicture bool           `json:"default_picture"`
+		Name     string `json:"name"`
+		Link     string `json:"link"`
+		Location string `json:"location"`
+		Pictures struct {
+			Sizes []PictureSize `json:"sizes"`
 		} `json:"pictures"`
-		Metadata struct {
-			Connections struct {
-				Albums struct {
-					Total int `json:"total"`
-				} `json:"albums"`
-				Channels struct {
-					Total int `json:"total"`
-				} `json:"channels"`
-				Followers struct {
-					Total int `json:"total"`
-				} `json:"followers"`
-				Following struct {
-					Total int `json:"total"`
-				} `json:"following"`
-				Likes struct {
-					Total int `json:"total"`
-				} `json:"likes"`
-				Videos struct {
-					Total int `json:"total"`
-				} `json:"videos"`
-			} `json:"connections"`
-		} `json:"metadata"`
 	} `json:"user"`
-	Files      VideoFiles `json:"files"`
-	Status     string     `json:"status"`
-	IsPlayable bool       `json:"is_playable"`
-	HasAudio   bool       `json:"has_audio"`
-}
-
-type PictureSize struct {
-	Width  int    `json:"width"`
-	Height int    `json:"height"`
-	Link   string `json:"link"`
-}
-
-type VideoFile struct {
-	Quality     string    `json:"quality"`
-	Type        string    `json:"type"`
-	Width       int       `json:"width,omitempty"`
-	Height      int       `json:"height,omitempty"`
-	Expires     time.Time `json:"expires"`
-	Link        string    `json:"link"`
-	CreatedTime time.Time `json:"created_time"`
-	Fps         float64   `json:"fps"`
-	VideoFileID int       `json:"video_file_id"`
-	Size        int       `json:"size"`
-	Md5         string    `json:"md5"`
-	PublicName  string    `json:"public_name"`
-	SizeShort   string    `json:"size_short"`
-	LinkSecure  string    `json:"link_secure,omitempty"`
-}
-
-type VideoFiles []*VideoFile
-
-// Best returns the VideoFile with the largest size.
-func (f VideoFiles) Best() *VideoFile {
-	if len(f) == 0 {
-		return nil
-	}
-	var best = f[0]
-
-	for _, file := range f {
-		if file.Size > best.Size {
-			best = file
-		}
-	}
-	return best
-}
-
-// Worst returns the VideoFile with the smallest size.
-func (f VideoFiles) Worst() *VideoFile {
-	if len(f) == 0 {
-		return nil
-	}
-	var worst = f[0]
-
-	for _, file := range f {
-		if file.Size < worst.Size {
-			worst = file
-		}
-	}
-	return worst
-}
-
-// Prorgessive returns VideoFiles with a direct URL.
-func (f VideoFiles) Progressive() VideoFiles {
-	var result = VideoFiles{}
-	for _, file := range f {
-		if file.Quality != "hls" {
-			result = append(result, file)
-		}
-	}
-	return result
-}
-
-// Hls returns VideoFiles with a URL to the .m3u8 playlist.
-func (f VideoFiles) Hls() *VideoFile {
-	for _, file := range f {
-		if file.Quality == "hls" {
-			return file
-		}
-	}
-	return nil
 }
 
 type PeopleItem struct {
@@ -355,7 +223,7 @@ type PeopleItem struct {
 	Link     string `json:"link"`
 	Location string `json:"location"`
 	Pictures struct {
-		Sizes []*PictureSize `json:"sizes"`
+		Sizes []PictureSize `json:"sizes"`
 	} `json:"pictures"`
 	Metadata struct {
 		Connections struct {
@@ -373,12 +241,7 @@ type ChannelItem struct {
 	Name     string `json:"name"`
 	Link     string `json:"link"`
 	Pictures struct {
-		Sizes []struct {
-			Width              int    `json:"width"`
-			Height             int    `json:"height"`
-			Link               string `json:"link"`
-			LinkWithPlayButton string `json:"link_with_play_button"`
-		} `json:"sizes"`
+		Sizes []PictureSize `json:"sizes"`
 	} `json:"pictures"`
 	Metadata struct {
 		Connections struct {
@@ -396,12 +259,7 @@ type GroupItem struct {
 	Name     string `json:"name"`
 	Link     string `json:"link"`
 	Pictures struct {
-		Sizes []struct {
-			Width              int    `json:"width"`
-			Height             int    `json:"height"`
-			Link               string `json:"link"`
-			LinkWithPlayButton string `json:"link_with_play_button"`
-		} `json:"sizes"`
+		Sizes []PictureSize `json:"sizes"`
 	} `json:"pictures"`
 	Metadata struct {
 		Connections struct {
@@ -413,4 +271,10 @@ type GroupItem struct {
 			} `json:"videos"`
 		} `json:"connections"`
 	} `json:"metadata"`
+}
+
+type PictureSize struct {
+	Width  int    `json:"width"`
+	Height int    `json:"height"`
+	Link   string `json:"link"`
 }

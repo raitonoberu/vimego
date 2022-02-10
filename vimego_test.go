@@ -41,11 +41,12 @@ func TestFormats(t *testing.T) {
 
 func TestSearch(t *testing.T) {
 	client := NewSearchClient()
+
+	client.Filter = VideoFilter
 	result, err := client.Search("Rick Astley", 1)
 	if err != nil {
 		t.Fatal(err)
 	}
-
 	videos := result.Data.Videos()
 	if len(videos) == 0 {
 		t.Fatal("len(videos) == 0")
@@ -53,10 +54,43 @@ func TestSearch(t *testing.T) {
 	if videos[0].Link == "" {
 		t.Error("videos[0].Link == \"\"")
 	}
-	if len(videos[0].Files) == 0 {
-		t.Fatal("len(videos[0].Files) == 0")
+
+	client.Filter = ChannelFilter
+	result, err = client.Search("My channel", 1)
+	if err != nil {
+		t.Fatal(err)
 	}
-	if videos[0].Files.Best().Link == "" {
-		t.Error("videos[0].Files.Best().Link == \"\"")
+	channels := result.Data.Channels()
+	if len(channels) == 0 {
+		t.Fatal("len(channels) == 0")
+	}
+	if channels[0].Link == "" {
+		t.Error("channels[0].Link == \"\"")
+	}
+
+	client.Filter = GroupFilter
+	result, err = client.Search("Group", 1)
+	if err != nil {
+		t.Fatal(err)
+	}
+	groups := result.Data.Groups()
+	if len(groups) == 0 {
+		t.Fatal("len(groups) == 0")
+	}
+	if groups[0].Link == "" {
+		t.Error("groups[0].Link == \"\"")
+	}
+
+	client.Filter = PeopleFilter
+	result, err = client.Search("Mister", 1)
+	if err != nil {
+		t.Fatal(err)
+	}
+	people := result.Data.People()
+	if len(people) == 0 {
+		t.Fatal("len(people) == 0")
+	}
+	if people[0].Link == "" {
+		t.Error("people[0].Link == \"\"")
 	}
 }
