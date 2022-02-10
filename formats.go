@@ -37,7 +37,7 @@ func (p ProgressiveFormats) Worst() *ProgressiveFormat {
 }
 
 type ProgressiveFormat struct {
-	Profile int    `json:"profile"`
+	Profile int    `json:"profile,string"`
 	Width   int    `json:"width"`
 	Mime    string `json:"mime"`
 	Fps     int    `json:"fps"`
