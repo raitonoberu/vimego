@@ -48,13 +48,13 @@ func TestSearch(t *testing.T) {
 
 	videos := result.Data.Videos()
 	if len(videos) == 0 {
-		t.Error("len(videos) == 0")
+		t.Fatal("len(videos) == 0")
 	}
 	if videos[0].Link == "" {
 		t.Error("videos[0].Link == \"\"")
 	}
 	if len(videos[0].Files) == 0 {
-		t.Error("len(videos[0].Files) == 0")
+		t.Fatal("len(videos[0].Files) == 0")
 	}
 	if videos[0].Files.Best().Link == "" {
 		t.Error("videos[0].Files.Best().Link == \"\"")
